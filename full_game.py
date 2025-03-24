@@ -154,6 +154,7 @@ class GameGUI:
 
         self.current_node = None
         self.tree = None
+        self.step_count = 1  # Skaita sākotnējo stāvokli
 
     def start_game(self):
         try:
@@ -167,6 +168,7 @@ class GameGUI:
         self.tree = GameTree(start_value)
         self.tree.build_tree(self.tree.root)
         self.current_node = self.tree.root
+        self.step_count = 1  # Sākuma stāvoklis ir pirmais
 
         self.update_gui()
 
@@ -235,6 +237,7 @@ class GameGUI:
                 p2 -= 1
 
         self.current_node = Node(new_value, p1, p2, turn)
+        self.step_count += 1  # Katrs gājiens ir jauns mezgls
 
     def update_gui(self):
         self.output_label.config(text=f"Pašreizējais skaitlis: {self.current_node.value}")
@@ -248,7 +251,7 @@ class GameGUI:
         else:
             result = "Neizšķirts!"
 
-        self.output_label.config(text=f"Spēle beigusies! {result} Iegūtais skaitlis: {self.current_node.value}")
+        self.output_label.config(text=f"Spēle beigusies! {result} Iegūtais skaitlis: {self.current_node.value}.\nSpēles laikā tika apmeklēti {self.step_count} stāvokļi (mezgli).")
         self.move_entry.pack_forget()
         self.move_button.pack_forget()
 
